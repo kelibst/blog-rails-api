@@ -30,4 +30,19 @@ RSpec.describe Article, type: :model do
     expect(inva_Article).not_to be_valid
   end
 end
+
+  describe '.recent' do
+    it 'should list articles base on recent method' do
+      old_article = create :article
+      newer_arclie = create :article
+
+      expect(described_class.recent).to eq(
+        [newer_arclie, old_article ]
+      )
+      old_article.update_column :created_at, Time.now
+      expect(described_class.recent).to eq(
+        [old_article, newer_arclie ]
+      )
+    end
+  end
 end
